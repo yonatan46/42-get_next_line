@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yonamog2 <yonamog2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 08:03:43 by yonamog2          #+#    #+#             */
-/*   Updated: 2022/10/17 14:40:51 by yonamog2         ###   ########.fr       */
+/*   Updated: 2022/10/17 14:47:27 by yonamog2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_full_str(int fd, char *store)
 {
@@ -38,15 +38,15 @@ char	*ft_full_str(int fd, char *store)
 
 char	*get_next_line(int fd)
 {
-	static char	*stor;
+	static char	*stor[1024];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= INT_MAX)
 		return (NULL);
-	stor = ft_full_str(fd, stor);
-	if (!stor)
+	stor[fd] = ft_full_str(fd, stor[fd]);
+	if (!stor[fd])
 		return (NULL);
-	line = ft_get_line(stor);
-	stor = ft_get_remain(stor);
+	line = ft_get_line(stor[fd]);
+	stor[fd] = ft_get_remain(stor[fd]);
 	return (line);
 }
